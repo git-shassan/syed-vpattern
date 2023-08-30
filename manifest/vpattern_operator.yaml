@@ -1,0 +1,27 @@
+# Nothing needs to change in this file. Make changes in other two files for a using a different/new git repo
+# ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/cluster-monitoring: "true"
+  name: openshift-gitops
+---
+apiVersion: operators.coreos.com/v1
+kind: Operator
+metadata:
+  name: patterns-operator.openshift-operators
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/patterns-operator.openshift-operators: ""
+  name: patterns-operator
+  namespace: openshift-operators
+spec:
+  channel: fast
+  installPlanApproval: Automatic
+  name: patterns-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace

@@ -1,0 +1,18 @@
+# only the targetRepo field needs to change to point to the correct GIT repo
+# ---
+apiVersion: gitops.hybrid-cloud-patterns.io/v1alpha1
+kind: Pattern
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: ebc-multicloud-gitops
+  namespace: openshift-operators
+spec:
+  clusterGroupName: hub
+  gitOpsSpec:
+    operatorChannel: gitops-1.8
+    operatorSource: redhat-operators
+  gitSpec:
+    targetRepo: https://github.com/git-shassan/syed-vpattern.git
+    targetRevision: main
+apiVersion: gitops.hybrid-cloud-patterns.io/v1alpha1
