@@ -1,0 +1,11 @@
+---
+global:
+  pattern: ebc-multicloud-gitops
+
+  options:
+    useCSV: false
+    syncPolicy: Automatic
+    installPlanApproval: Automatic
+
+main:
+  clusterGroupName: hub

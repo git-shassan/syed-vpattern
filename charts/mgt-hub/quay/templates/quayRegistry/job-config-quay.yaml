@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "30"
+  name: config-quay-repo
+  namespace: {{ .Values.quay.namespace }}
+spec:
+  template:
+    spec:
+      containers:
+      - image: {{ .Values.job.image2 }}
+        command:
+        - /bin/bash
+        - -c
+        - |
+          QUAY_HOSTNAME=quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab
+          sleep 15
+          QUAYTOKEN=$(curl -X POST -k  https://$QUAY_HOSTNAME/api/v1/user/initialize --header 'Content-Type: application/json' --data '{ "username": "quay", "password":"registry", "email": "quay@quay.com", "access_token": true}' | jq -r '.access_token')
+          echo $QUAYTOKEN
+          sleep 15
+          curl -X POST -k  https://$QUAY_HOSTNAME/api/v1/user/initialize --header 'Content-Type: application/json' --data '{ "username": "quayiadmin", "password":"registry", "email": "quayadmin@quay.com"}' | jq 
+          sleep 15
+          curl -X POST -k --header 'Content-Type: application/json' -H "Authorization: Bearer $QUAYTOKEN" https://$QUAY_HOSTNAME/api/v1/organization/ --data '{"name": "ocp", "email": "ocp@quay.com"}' | jq
+          sleep 15
+          curl -X POST -k https://$QUAY_HOSTNAME/api/v1/repository -H "Authorization: Bearer $QUAYTOKEN" -H 'Content-Type: application/json' -d '{"namespace":"quay", "repository":"ocp4", "description":"ocp4", "visibility": "public"}' | jq
+          sleep 15
+          curl -X POST -k --header 'Content-Type: application/json' -H "Authorization: Bearer $QUAYTOKEN" https://$QUAY_HOSTNAME/api/v1/organization/ --data '{"name": "operatorhub", "email": "operatorhub@quay.com"}' | jq
+          sleep 15
+          curl -X POST -k https://$QUAY_HOSTNAME/api/v1/repository -H "Authorization: Bearer $QUAYTOKEN" -H 'Content-Type: application/json' -d '{"namespace":"operatorhub", "repository":"catalog", "description":"catalog", "visibility": "public"}' | jq
+          sleep 15
+          curl -X POST -k --header 'Content-Type: application/json' -H "Authorization: Bearer $QUAYTOKEN" https://$QUAY_HOSTNAME/api/v1/organization/ --data '{"name": "certified", "email": "certified@quay.com"}' | jq
+          sleep 15
+          curl -X POST -k https://$QUAY_HOSTNAME/api/v1/repository -H "Authorization: Bearer $QUAYTOKEN" -H 'Content-Type: application/json' -d '{"namespace":"certified", "repository":"certified-operator-index", "description":"certified-operator-index", "visibility": "public"}' | jq
+          sleep 15          
+          curl -X POST -k --header 'Content-Type: application/json' -H "Authorization: Bearer $QUAYTOKEN" https://$QUAY_HOSTNAME/api/v1/organization/ --data '{"name": "ospd", "email": "ospd@quay.com"}' | jq
+          sleep 15
+          curl -X POST -k https://$QUAY_HOSTNAME/api/v1/repository -H "Authorization: Bearer $QUAYTOKEN" -H 'Content-Type: application/json' -d '{"namespace":"ospd", "repository":"osp-director-operator-index", "description":"osp-director-operator-index", "visibility": "public"}' | jq
+          sleep 15          
+
+        name: config-quay-repo
+      dnsPolicy: ClusterFirst
+      activeDeadlineSeconds: 900
+      restartPolicy: Never
+      serviceAccountName: quay-admin-sa
+      terminationGracePeriodSeconds: 60

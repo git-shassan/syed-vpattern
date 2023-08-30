@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "30"
+  name: oc-mirror-plugin
+  namespace: {{ .Values.quay.namespace }}
+spec:
+  template:
+    spec:
+      containers:
+      - env:
+        - name: "HTTP_PROXY"
+          value: "http://192.168.32.4:3128"
+          name: "HTTPS_PROXY"
+          value: "http://192.168.32.4:3128"
+          name: "NO_PROXY"
+          value: "mgmt.npss.bos2.lab,10.128.0.0/14,,172.30.0.0/16,172.31.1.0/24"  
+        name: for-mirroring
+        image: {{ .Values.job.image3 }}
+        command:
+        - /bin/bash
+        - -c
+        - |
+          echo "###"
+          oc project quay-enterprise
+          echo "Checking for config map for ImageSource..."
+          while [ $(oc get cm -n quay-enterprise imageset | wc -l) != "2" ]; do echo "watiting for 5 seconds.."; sleep 5; done 
+          oc extract configmap/imageset
+          oc extract configmap/kube-root-ca.crt
+          cp ca.crt /etc/pki/ca-trust/source/
+          cp ca.crt /etc/pki/ca-trust/source/anchors
+          # might not need this one:
+          cp ca.crt /etc/pki/ca-trust/source/whitelist
+          update-ca-trust
+          ## Extract and modify pull secret
+          echo "Extract the current pull secret"
+          oc extract -n openshift-config secret/pull-secret --confirm --to=.
+          echo "Add new quay credentials to pull secret"
+          QUAY_HOSTNAME= {{ .Values.job.quay_hostname }}
+          QUAY_USER = {{ .Values.job.quay_user }}
+          QUAY_PASSWD = {{ .Values.job.quay_passwd }}
+          b64auth=$(echo -n '$QUAY_USER:$QUAY_PASSWD' | base64 -w0); echo $b64auth
+          AUTHSTRING="{\"$QUAY_HOSTNAME\": {\"auth\": \"$b64auth\",\"email\": \"dummy@quay1.npss\"}}"; 
+          echo $AUTHSTRING
+          jq -c ".auths += $AUTHSTRING" < .dockerconfigjson > .dockerconfigjson-upd
+          echo "Push updated pull secret back to the cluster"
+          oc -n openshift-config set data secret/pull-secret --from-file=.dockerconfigjson=.dockerconfigjson-upd
+          mkdir ~/.docker
+          mv .dockerconfigjson-upd ~/.docker/config.json
+          echo "Mirroring..."
+          oc-mirror --config=./ImageSetConfiguration.yaml docker://$QUAY_HOSTNAME
+        name: oc-mirror-plugin
+      dnsPolicy: ClusterFirst
+      activeDeadlineSeconds: 900
+      restartPolicy: Never
+      serviceAccountName: quay-admin-sa
+      terminationGracePeriodSeconds: 60

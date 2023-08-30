@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "30"
+  name: oc-mirror-plugin
+  namespace: {{ .Values.quay.namespace }}
+spec:
+  template:
+    spec:
+      containers:
+      - env:
+        - name: "HTTP_PROXY"
+          value: "http://192.168.32.4:3128"
+          name: "HTTPS_PROXY"
+          value: "http://192.168.32.4:3128"
+          name: "NO_PROXY"
+          value: "mgmt.npss.bos2.lab,10.128.0.0/14,fd02::/48,172.30.0.0/16,fd03::/112,192.168.34.0/25,fd00:1921:6834::/48"  
+
+      - image: {{ .Values.job.image2 }}
+        command:
+        - /bin/bash
+        - -c
+        - |
+          QUAY_HOSTNAME=quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab
+          oc version
+          opm version
+          oc-mirror version
+          wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
+          wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/opm-linux.tar.gz
+          wget https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz
+          mkdir tmp
+          mv openshift-client-linux.tar.gz ~/tmp
+          mv opm-linux.tar.gz ~/tmp
+          cd tmp
+          tar -xf openshift-client-linux.tar.gz
+          tar -xf opm-linux.tar.gz
+          tar xvzf oc-mirror.tar.gz
+          chmod +x oc-mirror
+          cp oc /usr/local/bin
+          cp kubectl /usr/local/bin
+          cp opm  /usr/local/bin
+          cp oc-mirror /usr/local/bin/
+          oc version
+          oc-mirror version
+          rm -rfv tmp/    
+ 
+
+
+        name: oc-mirror-plugin
+      dnsPolicy: ClusterFirst
+      activeDeadlineSeconds: 900
+      restartPolicy: Never
+      serviceAccountName: quay-admin-sa
+      terminationGracePeriodSeconds: 60
