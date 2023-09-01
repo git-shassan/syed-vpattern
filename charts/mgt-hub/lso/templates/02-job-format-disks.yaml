@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: job-format-disks
+  namespace: {{ .Values.lso.namespace }}
+spec:
+  template:
+    spec:
+      containers:
+      - image: {{ .Values.job.image }}
+        command:
+        - /bin/bash
+        - -c
+        - |
+          format_selection = {{ .Values.lso.formatting }}
+          if [ $format_selection]; then 
+            echo "Formatting all the disks now...."
+            for NODE in $(oc get nodes -ojsonpath='{.items[*].metadata.name}'); do 
+              echo "=================="; echo $NODE; echo "==================";
+              oc debug node/$NODE -- chroot /host /bin/bash -c 'for DISK in $(lsblk -pJ | jq -r .blockdevices[].name | grep -v "loop\|sdb\|sr0\|rbd"); do echo "formatting: "$DISK; sgdisk -Z $DISK; done' ; done
+          else echo "Skipping disk formatting ...."
+          fi 
+        name: format-disks
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      serviceAccount: {{ .Values.serviceAccountName }}
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      terminationGracePeriodSeconds: {{ .Values.lso.jobTerminationGracePeriod }}

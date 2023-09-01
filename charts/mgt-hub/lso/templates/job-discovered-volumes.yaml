@@ -23,7 +23,7 @@ spec:
           #echo "expecting..." $expected_devices;
           #echo "discovered..." $discovered_devices;
           while [ $expected_devices != $discovered_devices ]; do 
-            echo "=========================="; date; echo "==============================="
+            echo "==============================="; date; echo "==============================="
             echo "Not all disks discovered yet..."; 
             echo "expecting..." $expected_devices; 
             echo "discovered..." $discovered_devices; 
@@ -33,7 +33,7 @@ spec:
             else discovered_devices=$(oc get localvolumesets.local.storage.openshift.io -n openshift-local-storage local-block -o jsonpath='{.status.totalProvisionedDeviceCount}');
             fi
             done
-          echo "=========================="; date; echo "==============================="
+          echo "==============================="; date; echo "==============================="
           echo "all found..."; 
           echo "expecting..." $expected_devices; echo "found..." $discovered_devices;
         name: job-discovered-volumes
