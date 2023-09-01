@@ -14,7 +14,7 @@ spec:
         - /bin/bash
         - -c
         - |
-          oc patch sc ocs-storagecluster-ceph-rbd -p '{"metadata": {"annotations": {"storageclass.kubernetes.io/is-default-class": "true"}}}'
+          oc patch sc {{ .Values.odf.storageClass.name }} -p '{"metadata": {"annotations": {"storageclass.kubernetes.io/is-default-class": "true"}}}'
         name: deault-storage-class-rbd
       dnsPolicy: ClusterFirst
       restartPolicy: Never
