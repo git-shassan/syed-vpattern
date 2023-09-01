@@ -28,7 +28,7 @@ spec:
   multiCloudGateway:
     reconcileStrategy: manage   # <-- Default value is manage
   storageDeviceSets:
-  - count: 9 
+  - count: {{ .Values.odf.count }}
     dataPVCTemplate:
       spec:
         accessModes:
@@ -41,7 +41,7 @@ spec:
     name: ocs-deviceset
     placement: {}
     portable: false
-    replica: 1
+    replica: {{ .Values.odf.replica }}
     resources:
       limits:
         cpu: "2"

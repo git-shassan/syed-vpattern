@@ -9,7 +9,7 @@ clusterGroup:
   - openshift-cnv
   - openshift-nmstate  
   - openshift-local-storage
-    #- openshift-storage  
+  - openshift-storage  
     # - quay-enterprise
   - open-cluster-management #for ACM
     #  - openshift-operators-redhat
@@ -34,10 +34,10 @@ clusterGroup:
     lso:
       name: local-storage-operator
       namespace: openshift-local-storage
-    #
-    #    odf:
-    #      name: odf-operator
-    #      namespace: openshift-storage  
+
+    odf:
+      name: odf-operator
+      namespace: openshift-storage  
     # 
     #
     #    quay:

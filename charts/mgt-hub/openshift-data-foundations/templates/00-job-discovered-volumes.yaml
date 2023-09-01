@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "10"
+  name: job-discovered-volumes
+  namespace: {{ .Values.lso.namespace }}
+
+spec:
+  template:
+    spec:
+      containers:
+      - image: {{ .Values.job.image }}
+        command:
+        - /bin/bash
+        - -c
+        - |
+          expected_devices=1
+          if [ $(oc get localvolumesets.local.storage.openshift.io -n openshift-local-storage local-block | wc -l) == 0 ]; then 
+            discovered_devices=0;
+          else discovered_devices=$(oc get localvolumesets.local.storage.openshift.io -n openshift-local-storage local-block -o jsonpath='{.status.totalProvisionedDeviceCount}');
+          fi
+          echo "Before starting ODF config, ensure that LSO had done its job..."
+          #echo "expecting..." $expected_devices;
+          #echo "discovered..." $discovered_devices;
+          while [ $expected_devices != $discovered_devices ]; do 
+            echo "==============================="; date; echo "==============================="
+            echo "Not all disks discovered yet..."; 
+            echo "expecting..." $expected_devices; 
+            echo "discovered..." $discovered_devices; 
+            echo "sleeping for 10 secs..."; sleep 10; 
+            if [ $(oc get localvolumesets.local.storage.openshift.io -n openshift-local-storage local-block | wc -l) == 0 ]; then 
+              discovered_devices=0;
+            else discovered_devices=$(oc get localvolumesets.local.storage.openshift.io -n openshift-local-storage local-block -o jsonpath='{.status.totalProvisionedDeviceCount}');
+            fi
+            done
+          echo "==============================="; date; echo "==============================="
+          echo "all found..."; 
+          echo "expecting..." $expected_devices; echo "found..." $discovered_devices;
+        name: job-discovered-volumes
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      serviceAccount: {{ .Values.lso.serviceAccountName }}
+      serviceAccountName: {{ .Values.lso.serviceAccountName }}
+      terminationGracePeriodSeconds: {{ .Values.lso.jobTerminationGracePeriod }}

@@ -13,7 +13,8 @@ lso:
   formatting: true # true or false 
 
 
-#RoleBasedAccessControl
+#RoleBasedAccessControl .. 
+# NOTE: If changing the role OR name of role-binding here, then make changes in ODF variables as well 
 serviceAccountName: lso-node-label-sa
 rbac:
   roles:
