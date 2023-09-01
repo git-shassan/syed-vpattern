@@ -110,11 +110,11 @@ clusterGroup:
       path: charts/mgt-hub/lso
       project: hub  
 
-    odf:
-      name: odf
-      namespace: openshift-storage
-      path: charts/mgt-hub/openshift-data-foundations  
-      project: hub-storage
+        #    odf:
+        #      name: odf
+        #      namespace: openshift-storage
+        #      path: charts/mgt-hub/openshift-data-foundations  
+        #      project: hub-storage
         #    quay:
         #      name: quay
         #      namespace: quay-enterprise
