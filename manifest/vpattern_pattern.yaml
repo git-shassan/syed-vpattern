@@ -14,5 +14,5 @@ spec:
     operatorSource: redhat-operators
   gitSpec:
     targetRepo: https://github.com/git-shassan/syed-vpattern.git
-    targetRevision: main
+    targetRevision: master
 apiVersion: gitops.hybrid-cloud-patterns.io/v1alpha1

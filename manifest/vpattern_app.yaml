@@ -23,7 +23,7 @@ spec:
       - name: global.repoURL
         value: https://github.com/git-shassan/syed-vpattern.git
       - name: global.targetRevision
-        value: main
+        value: master
       - name: global.hubClusterDomain
         value: apps.mgmt.npss.bos2.lab
       - name: global.localClusterDomain
@@ -48,6 +48,6 @@ spec:
         extraParametersNested:
     path: common/clustergroup
     repoURL: https://github.com/git-shassan/syed-vpattern.git
-    targetRevision: main
+    targetRevision: master
   syncPolicy:
     automated: {}
