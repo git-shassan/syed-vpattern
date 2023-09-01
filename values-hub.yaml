@@ -35,9 +35,9 @@ clusterGroup:
       name: local-storage-operator
       namespace: openshift-local-storage
 
-        #    odf:
-        #      name: odf-operator
-        #      namespace: openshift-storage  
+    odf:
+      name: odf-operator
+      namespace: openshift-storage  
     # 
     #
     #    quay:
