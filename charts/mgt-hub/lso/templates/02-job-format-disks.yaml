@@ -14,7 +14,7 @@ spec:
         - /bin/bash
         - -c
         - |
-          format_selection = {{ .Values.lso.formatting }}
+          format_selection={{ .Values.lso.formatting }}
           if [ $format_selection == "true" ]; then 
             echo "Formatting all the disks now...."
             for NODE in $(oc get nodes -ojsonpath='{.items[*].metadata.name}'); do 
