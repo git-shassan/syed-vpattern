@@ -91,6 +91,7 @@ clusterGroup:
 
   projects:
   - hub
+  - hub-storage
 
   applications:
     cnv:
@@ -108,12 +109,12 @@ clusterGroup:
       namespace: openshift-local-storage
       path: charts/mgt-hub/lso
       project: hub  
-        #
-        #    odf:
-        #      name: odf
-        #      namespace: openshift-storage
-        #      path: charts/mgt-hub/openshift-data-foundations  
-        #      project: hub
+
+    odf:
+      name: odf
+      namespace: openshift-storage
+      path: charts/mgt-hub/openshift-data-foundations  
+      project: hub-storage
         #    quay:
         #      name: quay
         #      namespace: quay-enterprise
