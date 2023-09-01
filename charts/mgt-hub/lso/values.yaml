@@ -10,7 +10,7 @@ global:
 lso:
   jobTerminationGracePeriod: 300
   namespace: openshift-local-storage
-  formatting: false # true or false 
+  formatting: true # true or false 
 
 
 #RoleBasedAccessControl
