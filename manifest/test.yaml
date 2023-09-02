@@ -1,0 +1,13 @@
+apiVersion: gitops.hybrid-cloud-patterns.io/v1alpha1
+kind: Pattern
+metadata:
+  name: syed-vpattern
+  namespace: openshift-operators
+spec:
+  clusterGroupName: hub
+  gitSpec:
+    targetRepo: https://origin
+    targetRevision: master
+  gitOpsSpec:
+    operatorChannel: gitops-1.8
+    operatorSource: redhat-operators
