@@ -8,10 +8,10 @@ clusterGroup:
   namespaces:
   - openshift-cnv
   - openshift-nmstate  
-  - openshift-local-storage
-  - openshift-storage  
+    # - openshift-local-storage
+    # - openshift-storage  
     # - quay-enterprise
-  - open-cluster-management #for ACM
+    # - open-cluster-management #for ACM
     #  - openshift-operators-redhat
     #  - openshift-logging  
     #- openshift-operators-redhat
@@ -31,13 +31,13 @@ clusterGroup:
       name: kubernetes-nmstate-operator
       namespace: openshift-nmstate  
     
-    lso:
-      name: local-storage-operator
-      namespace: openshift-local-storage
-
-    odf:
-      name: odf-operator
-      namespace: openshift-storage  
+        #    lso:
+        #      name: local-storage-operator
+        #      namespace: openshift-local-storage
+        #
+        #    odf:
+        #      name: odf-operator
+        #      namespace: openshift-storage  
     # 
     #
     #    quay:
@@ -104,17 +104,17 @@ clusterGroup:
       namespace: openshift-nmstate
       path: charts/mgt-hub/nmstate  
       project: hub
-    lso:
-      name: local-storage 
-      namespace: openshift-local-storage
-      path: charts/mgt-hub/lso
-      project: hub  
-
-    odf:
-      name: odf
-      namespace: openshift-storage
-      path: charts/mgt-hub/openshift-data-foundations  
-      project: hub-storage
+        #    lso:
+        #      name: local-storage 
+        #      namespace: openshift-local-storage
+        #      path: charts/mgt-hub/lso
+        #      project: hub  
+        #
+        #    odf:
+        #      name: odf
+        #      namespace: openshift-storage
+        #      path: charts/mgt-hub/openshift-data-foundations  
+        #      project: hub-storage
         #    quay:
         #      name: quay
         #      namespace: quay-enterprise
