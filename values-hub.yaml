@@ -18,7 +18,7 @@ clusterGroup:
     #- openshift-operators-redhat
     #- prom-kafka-adapter 
     #- edge-gitops-vms
-    #- mano-apps
+    - mano-apps
     #- mano-automation
     #- ansible
   subscriptions:
