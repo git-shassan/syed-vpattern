@@ -29,6 +29,7 @@ spec:
           echo "Approving these..."
           oc patch installplan $planspending -n {{ .Values.acm.namespace }} --type merge --patch '{"spec":{"approved":true}}'
           echo "Done..."
+          sleep 1000
         name: acm-install-plan-approve
       dnsPolicy: ClusterFirst
       activeDeadlineSeconds: 900
