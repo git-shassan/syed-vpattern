@@ -1,5 +1,5 @@
 # Container image used by deployment/pods
-image: "docker.io/minio/minio"
+image: "quay.io/minio/minio"
 namespace: minio
 size: 100Gi
 ingress:
