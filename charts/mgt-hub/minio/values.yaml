@@ -11,6 +11,7 @@ ingress:
 
 # user.accessKey and user.secretAccessKey are used to log into both the S3 API
 # and the web management console.
+# Hint: Access key length should be at least 3, and secret key length at least 8 characters
 user:
   accessKey: "minio"
-  secretAccessKey: "redhat"
+  secretAccessKey: "minioredhat"
