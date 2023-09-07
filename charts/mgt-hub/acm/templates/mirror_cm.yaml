@@ -9,7 +9,7 @@ data:
        mirror-by-digest-only = true
 
        [[registry.mirror]]
-       location = "{{ quay_fqdn }}/ocp/ocp4/multicluster-engine"
+       location = "{{ .Values.global.quay_fqdn }}/ocp/ocp4/multicluster-engine"
 
     [[registry]]
        prefix = ""
@@ -17,7 +17,7 @@ data:
        mirror-by-digest-only = true
 
        [[registry.mirror]]
-       location = "{{ quay_fqdn }}/ocp/ocp4/openshift/release-images"
+       location = "{{ .Values.global.quay_fqdn }}/ocp/ocp4/openshift/release-images"
 
     [[registry]]
        prefix = ""
@@ -25,9 +25,11 @@ data:
        mirror-by-digest-only = true
 
        [[registry.mirror]]
-       location = "{{ quay_fqdn }}/ocp/ocp4/openshift/release"
+       location = "{{ .Values.global.quay_fqdn }}/ocp/ocp4/openshift/release"
 kind: ConfigMap
 metadata:
   creationTimestamp: "2023-08-30T19:59:02Z"
   name: temp
   namespace: multicluster-engine
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"

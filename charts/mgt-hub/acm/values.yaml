@@ -2,5 +2,8 @@ clusterGroup:
   subscriptions:
     acm:
       source: redhat-operators
+acm: 
+  sa: acm-cli-sa
+  namespace: open-cluster-management
 global:
-  acmNamespace: open-cluster-management
+  quay_fqdn: quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab 
