@@ -1,0 +1,5 @@
+apiVersion: v2
+name: minio
+description: Minio
+type: application
+version: 0.1.0

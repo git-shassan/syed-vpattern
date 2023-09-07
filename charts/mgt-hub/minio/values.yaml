@@ -1,0 +1,16 @@
+# Container image used by deployment/pods
+image: "docker.io/minio/minio"
+namespace: minio
+size: 100Gi
+ingress:
+  # MinIO API DNS name. This is the S3 API.  Don't prefix with "https://"
+  minioApiDnsName: "minio.apps.mgmt2.npss.bos2.lab"
+  # MinIO Console DNS name. This is a management web console. Don't prefix
+  # with "https://"
+  minioConsoleDnsName: "minio-console.apps.mgmt2.npss.bos2.lab"
+
+# user.accessKey and user.secretAccessKey are used to log into both the S3 API
+# and the web management console.
+user:
+  accessKey: "minio"
+  secretAccessKey: "redhat"

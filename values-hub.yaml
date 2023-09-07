@@ -8,6 +8,7 @@ clusterGroup:
   namespaces:
   - openshift-cnv
   - openshift-nmstate  
+  - minio
     # - openshift-local-storage
     # - openshift-storage  
     # - quay-enterprise
@@ -104,6 +105,11 @@ clusterGroup:
       namespace: openshift-nmstate
       path: charts/mgt-hub/nmstate  
       project: hub
+    minio:
+      name: minio
+      namespace: minio 
+      path: charts/mgt-hub/minio
+      project: hub-storage
         #    lso:
         #      name: local-storage 
         #      namespace: openshift-local-storage
