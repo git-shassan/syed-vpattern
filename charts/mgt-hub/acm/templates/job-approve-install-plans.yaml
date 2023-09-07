@@ -23,11 +23,11 @@ spec:
         - -c
         - |
           echo "### Finding unapproved Install plans..."
-          planspending=$(oc get ip -n {{ Values.acm.namespace }}  -o=jsonpath='{.items[?(@.spec.approved==false)].metadata.name}')
+          planspending=$(oc get ip -n {{ .Values.acm.namespace }}  -o=jsonpath='{.items[?(@.spec.approved==false)].metadata.name}')
           echo "Found:"
           echo $planspending
           echo "Approving these..."
-          oc patch installplan $planspending -n {{ Values.acm.namespace }} --type merge --patch '{"spec":{"approved":true}}'
+          oc patch installplan $planspending -n {{ .Values.acm.namespace }} --type merge --patch '{"spec":{"approved":true}}'
           echo "Done..."
         name: acm-install-plan-approve
       dnsPolicy: ClusterFirst
