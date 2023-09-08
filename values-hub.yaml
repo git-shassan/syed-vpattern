@@ -7,18 +7,18 @@ clusterGroup:
 
   namespaces:
   - openshift-cnv
+  - mano-apps           # creating early to enable NAD to be created by nmstate
   - openshift-nmstate  
   - minio
+  - open-cluster-management #for ACM
     # - openshift-local-storage
     # - openshift-storage  
     # - quay-enterprise
-  - open-cluster-management #for ACM
     #  - openshift-operators-redhat
     #  - openshift-logging  
     #- openshift-operators-redhat
     #- prom-kafka-adapter 
     #- edge-gitops-vms
-  - mano-apps
     #- mano-automation
     #- ansible
   subscriptions:
@@ -46,10 +46,10 @@ clusterGroup:
     #      namespace: quay-enterprise    
     #        #channel: stable-3.7
     #
-    acm:
-      name: advanced-cluster-management
-      namespace: open-cluster-management
-      installPlanApproval: Manual
+    #    acm:
+    #      name: advanced-cluster-management
+    #      namespace: open-cluster-management
+    #      installPlanApproval: Manual
     #
     #    prometheus:
     #      name: prometheus
@@ -111,11 +111,11 @@ clusterGroup:
       namespace: minio 
       path: charts/mgt-hub/minio
       project: hub-storage
-    acm:
-      name: acm
-      namespace: open-cluster-management
-      project: hub
-      path: charts/mgt-hub/acm
+        #    acm:
+        #      name: acm
+        #      namespace: open-cluster-management
+        #      project: hub
+        #      path: charts/mgt-hub/acm
         #    lso:
         #      name: local-storage 
         #      namespace: openshift-local-storage
