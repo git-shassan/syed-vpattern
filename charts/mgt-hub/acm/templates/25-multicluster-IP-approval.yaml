@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "25"
+  name: multicluaster-engine-approve-install-plan
+  namespace: {{ .Values.acm.namespace }} 
+spec:
+  template:
+    spec:
+      containers:
+      - env:
+        - name: "HTTP_PROXY"
+          value: "http://192.168.32.4:3128"
+        - name: "HTTPS_PROXY"
+          value: "http://192.168.32.4:3128"
+        - name: "NO_PROXY"
+          value: "mgmt.npss.bos2.lab,10.128.0.0/14,,172.30.0.0/16,172.31.1.0/24"  
+        name: multicluaster-engine-approve-install-plan
+        image: quay.io/sfhassan/oc_net_tools
+        command:
+        - /bin/bash
+        - -c
+        - |
+          echo "### Finding unapproved Install plans for Multicluster-Engine..."
+          echo "...giving 30 seconds for MCE Install Plan to be created first ... "
+          # NS for MCE is usually multicluster-engine, but putting as variable just in case
+          count=0
+          while [ $count == 0 ]; do
+            planspending=$(oc get ip -n {{ .Values.mce.namespace }}  -o=jsonpath='{.items[?(@.spec.approved==false)].metadata.name}')
+            count=$(echo $x | wc -w)
+            echo "still waiting for IP...."
+            sleep 10
+          done
+          echo "Found:"
+          echo $planspending
+          echo "Approving these..."
+          oc patch installplan $planspending -n {{ .Values.mce.namespace }} --type merge --patch '{"spec":{"approved":true}}'
+          echo "Done..."
+        name: multicluaster-engine-approve-install-plan
+      dnsPolicy: ClusterFirst
+      activeDeadlineSeconds: 900
+      restartPolicy: Never
+      serviceAccountName: {{ .Values.acm.sa }}
+      terminationGracePeriodSeconds: 60

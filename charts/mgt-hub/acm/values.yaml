@@ -5,5 +5,8 @@ clusterGroup:
 acm: 
   sa: acm-cli-sa
   namespace: open-cluster-management
+mce:
+  namespace: multicluster-engine
 global:
   quay_fqdn: quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab 
+
