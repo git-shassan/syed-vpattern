@@ -32,6 +32,10 @@ clusterGroup:
       name: kubernetes-nmstate-operator
       namespace: openshift-nmstate  
     
+    acm:
+      name: advanced-cluster-management
+      namespace: open-cluster-management
+      installPlanApproval: Manual
         #    lso:
         #      name: local-storage-operator
         #      namespace: openshift-local-storage
@@ -46,10 +50,6 @@ clusterGroup:
     #      namespace: quay-enterprise    
     #        #channel: stable-3.7
     #
-    #    acm:
-    #      name: advanced-cluster-management
-    #      namespace: open-cluster-management
-    #      installPlanApproval: Manual
     #
     #    prometheus:
     #      name: prometheus
@@ -111,11 +111,11 @@ clusterGroup:
       namespace: minio 
       path: charts/mgt-hub/minio
       project: hub-storage
-        #    acm:
-        #      name: acm
-        #      namespace: open-cluster-management
-        #      project: hub
-        #      path: charts/mgt-hub/acm
+    acm:
+      name: acm
+      namespace: open-cluster-management
+      project: hub
+      path: charts/mgt-hub/acm
         #    lso:
         #      name: local-storage 
         #      namespace: openshift-local-storage
