@@ -1,0 +1,34 @@
+apiVersion: operators.coreos.com/v1
+kind: Operator
+metadata:
+  name: lvms-operator.openshift-storage
+spec: {}
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/lvms-operator.openshift-storage: ""
+  name: lvms-operator
+  namespace: {{ .Values.storageNS }}
+spec:
+  channel: stable-4.12
+  installPlanApproval: Automatic
+  name: lvms-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: lvms-operator.v4.12.1
+---
+apiVersion: lvm.topolvm.io/v1alpha1
+kind: LVMCluster
+metadata:
+  name: sno-lvmcluster
+  namespace: {{ .Values.storageNS }}
+spec:
+  storage:
+    deviceClasses:
+    - name: vg1
+      thinPoolConfig:
+        name: thin-pool-1
+        overprovisionRatio: 10
+        sizePercent: 90
