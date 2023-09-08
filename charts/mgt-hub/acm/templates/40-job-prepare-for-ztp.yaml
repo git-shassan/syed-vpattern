@@ -25,7 +25,7 @@ spec:
           echo "### patching provisioning-config"
           echo "...But first, wait for it to exist.."
           provisioncount=1
-          while [ $provisioncount <= 1 ]; do
+          while [ $provisioncount -le 1 ]; do
             provisioncount=$(oc get provisionings.metal3.io | wc -l)
             echo "...still waiting....Count is " $provisioncount
             sleep 10
