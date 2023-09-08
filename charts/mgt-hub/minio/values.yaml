@@ -1,4 +1,7 @@
 # Container image used by deployment/pods
+minio:
+  namespace: minio
+  sa: minio-sa
 image: "quay.io/minio/minio"
 namespace: minio
 size: 100Gi

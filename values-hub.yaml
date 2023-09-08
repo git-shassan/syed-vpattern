@@ -4,10 +4,11 @@
 clusterGroup:
   name: hub
   isHubCluster: true
-
+  common:
+    storageNS: openshift-storage
   namespaces:
   - openshift-cnv
-  - mano-apps           # creating early to enable NAD to be created by nmstate
+  - mgmt-apps           # creating early to enable NAD to be created by nmstate
   - openshift-nmstate  
   - minio
   - open-cluster-management #for ACM
