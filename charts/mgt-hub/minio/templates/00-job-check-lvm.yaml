@@ -26,7 +26,7 @@ spec:
           echo "### Only proceed if LVM is installed  ..."
           lvmready=0
           while [ $lvmready -lt 1 ]; do 
-            lvmready=$(oc get deployment -n {{ .Values.clusterGroup.common.storageNS }}  lvms-operator -o json | jq .status.availableReplicas)
+            lvmready=$(oc get deployment -n {{ .Values.storageNS }}  lvms-operator -o json | jq .status.availableReplicas)
             echo "Waiting for LVM operator to be ready...currently seeing pods: " $lvmready
             sleep 10
           done 

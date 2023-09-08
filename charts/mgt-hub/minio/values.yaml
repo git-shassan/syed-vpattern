@@ -1,4 +1,5 @@
 # Container image used by deployment/pods
+storageNS: openshift-storage
 minio:
   namespace: minio
   sa: minio-sa

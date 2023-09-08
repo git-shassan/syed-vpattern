@@ -10,7 +10,7 @@ metadata:
   labels:
     operators.coreos.com/lvms-operator.openshift-storage: ""
   name: lvms-operator
-  namespace: {{ .Values.clusterGroup.common.storageNS }}
+  namespace: {{ .Values.storageNS }}
 spec:
   channel: stable-4.12
   installPlanApproval: Automatic
@@ -23,7 +23,7 @@ apiVersion: lvm.topolvm.io/v1alpha1
 kind: LVMCluster
 metadata:
   name: sno-lvmcluster
-  namespace: {{ .Values.clusterGroup.common.storageNS }}
+  namespace: {{ .Values.storageNS }}
 spec:
   storage:
     deviceClasses:
