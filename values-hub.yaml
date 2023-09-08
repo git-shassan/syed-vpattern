@@ -10,7 +10,7 @@ clusterGroup:
   - mano-apps           # creating early to enable NAD to be created by nmstate
   - openshift-nmstate  
   - minio
-  - open-cluster-management #for ACM
+    # - open-cluster-management #for ACM
     # - openshift-local-storage
     # - openshift-storage  
     # - quay-enterprise
