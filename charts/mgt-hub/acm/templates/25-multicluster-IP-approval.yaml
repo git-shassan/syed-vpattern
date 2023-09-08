@@ -28,7 +28,7 @@ spec:
           count=0
           while [ $count == 0 ]; do
             planspending=$(oc get ip -n {{ .Values.mce.namespace }}  -o=jsonpath='{.items[?(@.spec.approved==false)].metadata.name}')
-            count=$(echo $x | wc -w)
+            count=$(echo $planspending | wc -w)
             echo "still waiting for IP...."
             echo "Found: "; echo $planspending
             echo "Count: "; echo $count
