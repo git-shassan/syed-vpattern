@@ -28,8 +28,7 @@ data:
        location = "{{ .Values.global.quay_fqdn }}/ocp/ocp4/openshift/release"
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2023-08-30T19:59:02Z"
   name: temp
   namespace: multicluster-engine
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "30"
