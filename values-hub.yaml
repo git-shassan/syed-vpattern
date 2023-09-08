@@ -6,12 +6,12 @@ clusterGroup:
   isHubCluster: true
   namespaces:
   - openshift-cnv
-  - mgmt-apps           # creating early to enable NAD to be created by nmstate
+  - mgmt-apps                 # creating early to enable NAD to be created by nmstate
   - openshift-nmstate  
-  - minio
-  - open-cluster-management #for ACM
-    # - openshift-local-storage
-    # - openshift-storage  
+    #- openshift-local-storage   # only needed if using LSO. Not needed for SNO case
+  - openshift-storage         # needed either by LVM, or LSO/ODF combo
+  - minio                     # only needed if ODF is not being used, as in SNO's case
+  - open-cluster-management   #for ACM
     # - quay-enterprise
     #  - openshift-operators-redhat
     #  - openshift-logging  
@@ -30,11 +30,20 @@ clusterGroup:
     nmstate:
       name: kubernetes-nmstate-operator
       namespace: openshift-nmstate  
+      channel: stable
     
     acm:
       name: advanced-cluster-management
       namespace: open-cluster-management
+      channel: release-2.8
       installPlanApproval: Manual
+    ## If SNO --> use LVM Operator, and enable application for LVM as well as Minio
+    ## If !SNO --> use LSO and ODF Operator, and enable tha respective apps *instead*
+    lvm:  
+      name: lvms-operator
+      namespace: openshift-storage
+      channel: stable-4.12
+        # 
         #    lso:
         #      name: local-storage-operator
         #      namespace: openshift-local-storage
@@ -105,16 +114,24 @@ clusterGroup:
       namespace: openshift-nmstate
       path: charts/mgt-hub/nmstate  
       project: hub
+    ## If SNO --> use LVM Operator, and enable application for LVM as well as Minio
+    ## If !SNO --> use LSO and ODF Operator, and enable tha respective apps *instead*
+    ############
+    #  SNO
+    ############
+    lvm:
+      name: lvm
+      namespace: opebshift-stoage 
+      path: charts/mgt-hub/lvm
+      project: hub-storage
     minio:
       name: minio
       namespace: minio 
       path: charts/mgt-hub/minio
       project: hub-storage
-    acm:
-      name: acm
-      namespace: open-cluster-management
-      project: hub
-      path: charts/mgt-hub/acm
+    ############
+    #  !SNO
+    ############
         #    lso:
         #      name: local-storage 
         #      namespace: openshift-local-storage
@@ -126,6 +143,12 @@ clusterGroup:
         #      namespace: openshift-storage
         #      path: charts/mgt-hub/openshift-data-foundations  
         #      project: hub-storage
+    ### end of SNO diversion ###
+    acm:
+      name: acm
+      namespace: open-cluster-management
+      project: hub
+      path: charts/mgt-hub/acm
         #    quay:
         #      name: quay
         #      namespace: quay-enterprise
