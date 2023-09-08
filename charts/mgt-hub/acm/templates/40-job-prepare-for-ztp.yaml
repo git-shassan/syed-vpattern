@@ -30,7 +30,7 @@ spec:
             echo "...still waiting....Count is " $provisioncount
             sleep 10
           done
-          oc patch provisioning provisioning-configuration --type merge -p '{"spec":{"watchAllNamespaces": true }'
+          oc patch provisioning provisioning-configuration --type merge -p '{"spec":{"watchAllNamespaces": true }}'
           echo "### Extracting pull secret "
           mkdir ~/cim
           cd ~/cim
