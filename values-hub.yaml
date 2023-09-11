@@ -12,14 +12,12 @@ clusterGroup:
   - openshift-storage         # needed either by LVM, or LSO/ODF combo
   - minio                     # only needed if ODF is not being used, as in SNO's case
   - open-cluster-management   #for ACM
-  - quay-enterprise
-    #  - openshift-operators-redhat
-    #  - openshift-logging  
-    #- openshift-operators-redhat
-    #- prom-kafka-adapter 
-    #- edge-gitops-vms
-    #- mano-automation
-    #- ansible
+    # NS for non automated items:
+  - quay-enterprise              #for Quay
+  - openshift-operators-redhat   #for elasticsearch
+  - openshift-logging            #for logging
+  - prom-kafka-adapter           #for Kafka
+  - ansible                      #for ansible
   subscriptions:
     cnv:
       name: kubevirt-hyperconverged
@@ -55,47 +53,38 @@ clusterGroup:
       name: quay-operator
       namespace: quay-enterprise    
       channel: stable-3.9
-    #
-    #
-    #    prometheus:
-    #      name: prometheus
-    #      namespace: service-telemetry    
-    #      channel: beta
-    #      source: community-operators
-    # 
-    #    kafka:
-    #      name: amq-streams
-    #      namespace: kafka-cluster 
-    #   
-    #    elasticsearch:
-    #      name: elasticsearch-operator
-    #      namespace: openshift-operators-redhat
+ 
+    kafka:
+      name: amq-streams
+      namespace: kafka-cluster 
+      channel: stable
+   
+    elasticsearch:
+      name: elasticsearch-operator
+      namespace: openshift-operators-redhat
+      channel: stable
 
-        #    logging:
-        #      name: cluster-logging
-        #      namespace: openshift-logging
-        #   
-        #    pao:
-        #      name: performance-addon-operator
-        #      namespace: openshift-performance-addon-operator    
-
-        #talam:
-        #  name: topology-aware-lifecycle-manager
-        #  namespace: openshift-operators 
+    logging:
+      name: cluster-logging
+      namespace: openshift-logging
+      channel: stable
+   
+    talm:
+      name: topology-aware-lifecycle-manager
+      namespace: openshift-operators 
+      channel: stable
 
         #    ansible:
         #      name: ansible-automation-platform-operator
         #      namespace: ansible 
         #      source: redhat-operators
-        #      channel: stable-2.3
-
+        #      channel: stable-2.4
 #     disable: true
-
-#    kubevirt-hyperconverged:
-#      name: kubevirt-hyperconverged
-#      namespace: openshift-cnv
-#      source: redhat-operators
-#      channel: stable
+        #    prometheus:
+        #      name: prometheus
+        #      namespace: service-telemetry    
+        #      channel: beta
+        #      source: community-operators
 
   projects:
   - hub
@@ -148,48 +137,31 @@ clusterGroup:
       namespace: open-cluster-management
       project: hub
       path: charts/mgt-hub/acm
-    quay:
-      name: quay
-      namespace: quay-enterprise
-      path: charts/mgt-hub/quay
-      project: hub-apps
-    #
+        #    quay:
+        #      name: quay
+        #      namespace: quay-enterprise
+        #      path: charts/mgt-hub/quay
+        #      project: hub-apps
         #
-            #    kafka:
-            #      name: kafka
-            #      namespace: kafka-cluster
-            #      path: charts/mgt-hub/kafka
-            #      project: hub
-            #
-            #    monitoring:
-            #      name: monitoring
-            #      namespace: prom-kafka-adapter
-            #      path: charts/mgt-hub/monitoring
-            #      project: hub  
-            #
-            #    logging:
-            #      name: logging
-            #      namespace: openshift-logging
-            #      path: charts/mgt-hub/logging
-            #      project: hub
-            #  
-            #    edge-gitops-vms:
-            #      name: edge-gitops-vms
-            #      namespace: edge-gitops-vms
-            #      project: hub
-            #      path: charts/mgt-hub/edge-gitops-vms
-            #
-            #    mc:    
-            #      name: mc
-            #      path: charts/mgt-hub/mc  
-            #      project: hub
-            #
-            #    ansible:
-            #      name: ansible
-            #      path: charts/mgt-hub/ansible
-            #      project: hub
-            #
-            #
-            #
+        #    kafka:
+        #      name: kafka
+        #      namespace: kafka-cluster
+        #      path: charts/mgt-hub/kafka
+        #      project: hub
+        #
+        #    monitoring:
+        #      name: monitoring
+        #      namespace: prom-kafka-adapter
+        #      path: charts/mgt-hub/monitoring
+        #      project: hub  
+        #
+        #    logging:
+        #      name: logging
+        #      namespace: openshift-logging
+        #      path: charts/mgt-hub/logging
+        #      project: hub
+        #  
+        #    ansible:
+        #      project: hub
 
 
