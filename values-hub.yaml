@@ -16,7 +16,8 @@ clusterGroup:
   - quay-enterprise              #for Quay
   - openshift-operators-redhat   #for elasticsearch
   - openshift-logging            #for logging
-  - prom-kafka-adapter           #for Kafka
+    #- prom-kafka-adapter           #for Kafka
+  - kafka-cluster                #for Kafka
   - ansible                      #for ansible
   subscriptions:
     cnv:
