@@ -7,7 +7,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "15"
 spec:
   components:
-{{- range .Values.quay.component }}
+{{- range .Values.quay.components }}
     - kind: {{ .name }}
       managed: {{ .managed | default "false" }}
 {{- end }}
