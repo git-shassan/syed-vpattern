@@ -12,7 +12,7 @@ clusterGroup:
   - openshift-storage         # needed either by LVM, or LSO/ODF combo
   - minio                     # only needed if ODF is not being used, as in SNO's case
   - open-cluster-management   #for ACM
-    # - quay-enterprise
+  - quay-enterprise
     #  - openshift-operators-redhat
     #  - openshift-logging  
     #- openshift-operators-redhat
@@ -38,11 +38,11 @@ clusterGroup:
       channel: release-2.8
       installPlanApproval: Manual
     ## If SNO --> use LVM Operator, and enable application for LVM as well as Minio
-    ## If !SNO --> use LSO and ODF Operator, and enable tha respective apps *instead*
     lvm:  
       name: lvms-operator
       namespace: openshift-storage
       channel: stable-4.12
+    ## If !SNO --> use LSO and ODF Operator, and enable tha respective apps *instead*
         # 
         #    lso:
         #      name: local-storage-operator
@@ -51,12 +51,10 @@ clusterGroup:
         #    odf:
         #      name: odf-operator
         #      namespace: openshift-storage  
-    # 
-    #
-    #    quay:
-    #      name: quay-operator
-    #      namespace: quay-enterprise    
-    #        #channel: stable-3.7
+    quay:
+      name: quay-operator
+      namespace: quay-enterprise    
+      channel: stable-3.9
     #
     #
     #    prometheus:
@@ -102,6 +100,7 @@ clusterGroup:
   projects:
   - hub
   - hub-storage
+  - hub-apps
 
   applications:
     cnv:
@@ -149,11 +148,11 @@ clusterGroup:
       namespace: open-cluster-management
       project: hub
       path: charts/mgt-hub/acm
-        #    quay:
-        #      name: quay
-        #      namespace: quay-enterprise
-        #      path: charts/mgt-hub/quay
-        #      project: hub
+    quay:
+      name: quay
+      namespace: quay-enterprise
+      path: charts/mgt-hub/quay
+      project: hub-apps
     #
         #
             #    kafka:

@@ -1,0 +1,25 @@
+NAME           DISPLAY NAME  DEFAULT CHANNEL
+quay-operator  Red Hat Quay  stable-3.9
+
+PACKAGE        CHANNEL     HEAD
+quay-operator  quay-v3.4   quay-operator.v3.4.7
+quay-operator  quay-v3.5   quay-operator.v3.5.7
+quay-operator  stable-3.6  quay-operator.v3.6.10
+quay-operator  stable-3.7  quay-operator.v3.7.13
+quay-operator  stable-3.8  quay-operator.v3.8.11
+quay-operator  stable-3.9  quay-operator.v3.9.0
+Checking push permissions for quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab
+Checking push permissions for quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab
+Checking push permissions for quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab
+Checking push permissions for quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab
+time="2023-08-17T16:58:24-04:00" level=warning msg="base64 decode CSV icon for bundle \"marin3r-operator.v0.11.1\"" error="illegal base64 data at input byte 264"
+NAME           DISPLAY NAME  DEFAULT CHANNEL
+quay-operator  Red Hat Quay  stable-3.9
+
+PACKAGE        CHANNEL     HEAD
+quay-operator  quay-v3.4   quay-operator.v3.4.7
+quay-operator  quay-v3.5   quay-operator.v3.5.7
+quay-operator  stable-3.6  quay-operator.v3.6.10
+quay-operator  stable-3.7  quay-operator.v3.7.13
+quay-operator  stable-3.8  quay-operator.v3.8.11
+quay-operator  stable-3.9  quay-operator.v3.9.0

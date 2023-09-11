@@ -1,0 +1,37 @@
+1) make MCE install plan to be manual
+2) Enable CIM : 
+	2a) enable watch all ns 
+		    oc patch provisioning provisioning-configuration --type merge -p '{"spec":{"watchAllNamespaces": true }}'
+	2b) copy pull secret CM to MCE namespace: 
+
+    cd /tmp/cim
+    # Extract the cluster pull secret
+    oc extract secret/pull-secret -n openshift-config --confirm --to=.
+    # Create new pull secret for remote clusters
+    oc -n multicluster-engine create secret generic assisted-deployment-pull-secret \
+       --type=kubernetes.io/dockerconfigjson --from-file=.dockerconfigjson=.dockerconfigjson
+    rm .dockerconfigjson
+
+	2c) create CM: 
+mkdir temp/
+cd temp/
+oc extract -n quay-enterprise configmap/kube-root-ca.crt
+oc extract -n multicluster-engine cm/temp
+oc -n multicluster-engine create configmap mirror-registry-config-map \
+--from-file=ca-bundle.crt=ca.crt --from-file=registries.conf=mirror-list
+rm -rf temp/ 
+
+3) apply agent service config 
+
+===
+ArgoCD: 
+1) creat NS e.g. npss-gitops
+    namespace: "{{ ztp_instance_ns }}"
+2) Create Argo instance ...variable is ZTP plugin name
+registry.redhat.io/openshift4/ztp-site-generate-rhel8:v4.12.3
+
+https://gitlab.consulting.redhat.com/global-tme-practice/mgmt-cluster/mgmt-config/-/blob/master/roles/openshift_gitops/templates/01_argoInstance.yml
+
+3)  other manifests (02->06) : 
+https://gitlab.consulting.redhat.com/global-tme-practice/mgmt-cluster/mgmt-config/-/tree/master/roles/openshift_gitops/templates
+

@@ -1,3 +1,0 @@
-==> Linting ./lso/templates/rbac/role.yaml
-Error unable to check Chart.yaml file in chart: stat lso/templates/rbac/role.yaml/Chart.yaml: not a directory
-

@@ -1,0 +1,76 @@
+apiVersion: v1
+data:
+  imageSetConfiguration.yml: "    #\n    # Use the command below to identify the default
+    channel\n    #\n    # oc-mirror list operators --catalog registry.redhat.io/redhat/redhat-operator-index:v4.12
+    --package <pkg name>\n    #\nkind: ImageSetConfiguration\napiVersion: mirror.openshift.io/v1alpha2\narchiveSize:
+    4                                                      \nstorageConfig:                                                      \n
+    \ registry:\n    imageURL: quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab/ocp/oc-mirror-metadata\n
+    \   skipTLS: false\nmirror:\n  platform:\n    channels:\n    - name: stable-4.11\n
+    \     type: ocp\n      minVersion: 4.11.39\n      maxVersion: 4.11.39\n    - name:
+    eus-4.12\n      type: ocp\n      minVersion: 4.10.57\n      maxVersion: 4.12.15\n
+    \     shortestPath: true\n    - name: stable-4.12\n      type: ocp\n      minVersion:
+    4.12.14\n      maxVersion: 4.12.14\n    graph: true                                                     \n
+    \ operators:\n    - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.10\n
+    \     packages:\n      - name: cluster-logging\n        channels:\n        - name:
+    stable\n        - name: stable-5.5\n        - name: stable-5.6\n      - name:
+    kubevirt-hyperconverged\n        channels:\n        - name: stable\n      - name:
+    local-storage-operator\n        channels:\n        - name: stable\n        - name:
+    \"4.10\"\n      - name: ocs-operator\n        channels:\n        - name: \"stable-4.10\"\n
+    \     - name: quay-operator\n        channels:\n        - name: \"stable-3.8\"\n
+    \     - name: sriov-network-operator\n        channels:\n        - name: stable\n
+    \       - name: \"4.10\"\n      - name: elasticsearch-operator\n        channels:\n
+    \       - name: stable\n        - name: stable-5.5\n        - name: stable-5.6\n
+    \     - name: servicemeshoperator\n        channels:\n        - name: stable\n
+    \     - name: jaeger-product\n        channels:\n        - name: stable\n      -
+    name: kiali-ossm\n        channels:\n        - name: stable\n      - name: odf-operator\n
+    \       channels: \n        - name: stable-4.10\n      - name: odf-multicluster-orchestrator\n
+    \       channels:\n        - name: stable-4.10\n      - name: odf-csi-addons-operator\n
+    \       channels:\n        - name: stable-4.10\n      - name: mcg-operator\n        channels:\n
+    \       - name: stable-4.10\n      - name: kubernetes-nmstate-operator\n        channels:\n
+    \       - name: stable\n    - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.11\n
+    \     packages:\n      - name: cluster-logging\n        channels:\n        - name:
+    stable\n        - name: stable-5.5\n        - name: stable-5.6\n      - name:
+    kubevirt-hyperconverged\n        channels:\n        - name: stable\n      - name:
+    local-storage-operator\n        channels:\n        - name: stable\n      - name:
+    ocs-operator\n        channels:\n        - name: \"stable-4.11\"\n      - name:
+    quay-operator\n        channels:\n        - name: \"stable-3.8\"\n      - name:
+    sriov-network-operator\n        channels:\n        - name: stable\n        - name:
+    \"4.11\"\n      - name: elasticsearch-operator\n        channels:\n        - name:
+    stable\n        - name: stable-5.5\n        - name: stable-5.6\n      - name:
+    servicemeshoperator\n        channels:\n        - name: stable\n      - name:
+    jaeger-product\n        channels:\n        - name: stable\n      - name: kiali-ossm\n
+    \       channels:\n        - name: stable\n      - name: odf-operator\n        channels:\n
+    \       - name: stable-4.11\n      - name: odf-multicluster-orchestrator\n        channels:\n
+    \       - name: stable-4.11\n      - name: odf-csi-addons-operator\n        channels:\n
+    \       - name: stable-4.11\n      - name: mcg-operator\n        channels:\n        -
+    name: stable-4.11\n      - name: kubernetes-nmstate-operator\n        channels:\n
+    \       - name: stable\n    - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.12
+    \ \n      packages:\n      - name: cluster-logging\n        channels:\n        -
+    name: stable\n        - name: stable-5.5\n        - name: stable-5.6\n      -
+    name: kubevirt-hyperconverged\n        channels:\n        - name: stable\n      -
+    name: local-storage-operator\n        channels:\n        - name: stable\n      -
+    name: ocs-operator\n        channels:\n        - name: \"stable-4.12\"\n      -
+    name: quay-operator\n        channels:\n        - name: \"stable-3.8\"\n      -
+    name: sriov-network-operator\n        channels:\n        - name: stable\n        -
+    name: \"4.12\"\n      - name: elasticsearch-operator\n        channels:\n        -
+    name: stable\n        - name: stable-5.5\n        - name: stable-5.6\n      -
+    name: servicemeshoperator\n        channels:\n        - name: stable\n      -
+    name: jaeger-product\n        channels:\n        - name: stable\n      - name:
+    kiali-ossm\n        channels:\n        - name: stable\n      - name: numaresources-operator\n
+    \       channels:\n        - name: \"4.12\"\n      - name: odf-operator\n        channels:\n
+    \       - name: stable-4.12\n      - name: odf-multicluster-orchestrator\n        channels:\n
+    \       - name: stable-4.12\n      - name: odf-csi-addons-operator\n        channels:\n
+    \       - name: stable-4.12\n      - name: mcg-operator\n        channels:\n        -
+    name: stable-4.12\n      - name: metallb-operator\n        channels:\n        -
+    name: stable\n      - name: kubernetes-nmstate-operator\n        channels:\n        -
+    name: stable\n      - name: multicluster-engine\n        channels:\n        -
+    name: stable-2.3\n        - name: stable-2.2\n      - name: advanced-cluster-management\n
+    \       channels:\n        - name: release-2.8\n        - name: release-2.7\n
+    \ additionalImages:\n  - name: registry.redhat.io/ubi8/ubi:latest                        \n
+    \ helm: {}\n\n\n"
+kind: ConfigMap
+metadata:
+  name: imageset
+  namespace: {{ .Values.quay.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
