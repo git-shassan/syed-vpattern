@@ -8,7 +8,7 @@ metadata:
 spec:
   components:
 {{- range .Values.quay.components }}
-    - kind: {{ .name }}
+    - kind: {{ .kind }}
       managed: {{ .managed | default "false" }}
 {{- end }}
 {{- if .Values.quay.configBundleSecret.deploy }}
