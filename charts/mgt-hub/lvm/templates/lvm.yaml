@@ -7,7 +7,9 @@ spec:
   storage:
     deviceClasses:
     - name: vg1
-      deviceSelector: "/dev/sdc"
+      deviceSelector: 
+        paths: 
+        - /dev/sdc
       thinPoolConfig:
         name: thin-pool-1
         overprovisionRatio: 10
