@@ -10,15 +10,15 @@ clusterGroup:
   - openshift-nmstate  
     #- openshift-local-storage   # only needed if using LSO. Not needed for SNO case
   - openshift-storage         # needed either by LVM, or LSO/ODF combo
-  - minio                     # only needed if ODF is not being used, as in SNO's case
-  - open-cluster-management   #for ACM
+    #- minio                     # only needed if ODF is not being used, as in SNO's case
+    #- open-cluster-management   #for ACM
     # NS for non automated items:
-  - quay-enterprise              #for Quay
-  - openshift-operators-redhat   #for elasticsearch
-  - openshift-logging            #for logging
+    #- quay-enterprise              #for Quay
+    #- openshift-operators-redhat   #for elasticsearch
+    #- openshift-logging            #for logging
     #- prom-kafka-adapter           #for Kafka
-  - kafka-cluster                #for Kafka
-  - ansible                      #for ansible
+    #- kafka-cluster                #for Kafka
+    #- ansible                      #for ansible
   subscriptions:
     cnv:
       name: kubevirt-hyperconverged
@@ -31,11 +31,11 @@ clusterGroup:
       namespace: openshift-nmstate  
       channel: stable
     
-    acm:
-      name: advanced-cluster-management
-      namespace: open-cluster-management
-      channel: release-2.8
-      installPlanApproval: Manual
+        #    acm:
+        #      name: advanced-cluster-management
+        #      namespace: open-cluster-management
+        #      channel: release-2.8
+        #      installPlanApproval: Manual
     ## If SNO --> use LVM Operator, and enable application for LVM as well as Minio
     lvm:  
       name: lvms-operator
@@ -50,31 +50,30 @@ clusterGroup:
         #    odf:
         #      name: odf-operator
         #      namespace: openshift-storage  
-    quay:
-      name: quay-operator
-      namespace: quay-enterprise    
-      channel: stable-3.9
- 
-    kafka:
-      name: amq-streams
-      namespace: kafka-cluster 
-      channel: stable
-   
-    elasticsearch:
-      name: elasticsearch-operator
-      namespace: openshift-operators-redhat
-      channel: stable
-
-    logging:
-      name: cluster-logging
-      namespace: openshift-logging
-      channel: stable
-   
-    talm:
-      name: topology-aware-lifecycle-manager
-      namespace: openshift-operators 
-      channel: stable
-
+        #    quay:
+        #      name: quay-operator
+        #      namespace: quay-enterprise    
+        #      channel: stable-3.9
+        # 
+        #    kafka:
+        #      name: amq-streams
+        #      namespace: kafka-cluster 
+        #      channel: stable
+        #   
+        #    elasticsearch:
+        #      name: elasticsearch-operator
+        #      namespace: openshift-operators-redhat
+        #      channel: stable
+        #
+        #    logging:
+        #      name: cluster-logging
+        #      namespace: openshift-logging
+        #      channel: stable
+        #   
+        #    talm:
+        #      name: topology-aware-lifecycle-manager
+        #      namespace: openshift-operators 
+        #      channel: stable
         #    ansible:
         #      name: ansible-automation-platform-operator
         #      namespace: ansible 
@@ -108,16 +107,16 @@ clusterGroup:
     ############
     #  SNO
     ############
-    lvm:
-      name: lvm
-      namespace: opebshift-stoage 
-      path: charts/mgt-hub/lvm
-      project: hub-storage
-    minio:
-      name: minio
-      namespace: minio 
-      path: charts/mgt-hub/minio
-      project: hub-storage
+    #    lvm:
+    #      name: lvm
+    #      namespace: opebshift-stoage 
+    #      path: charts/mgt-hub/lvm
+    #      project: hub-storage
+    #    minio:
+    #      name: minio
+    #      namespace: minio 
+    #      path: charts/mgt-hub/minio
+    #      project: hub-storage
     ############
     #  !SNO
     ############
@@ -133,11 +132,11 @@ clusterGroup:
         #      path: charts/mgt-hub/openshift-data-foundations  
         #      project: hub-storage
     ### end of SNO diversion ###
-    acm:
-      name: acm
-      namespace: open-cluster-management
-      project: hub
-      path: charts/mgt-hub/acm
+    #    acm:
+    #      name: acm
+    #      namespace: open-cluster-management
+    #      project: hub
+    #      path: charts/mgt-hub/acm
         #    quay:
         #      name: quay
         #      namespace: quay-enterprise

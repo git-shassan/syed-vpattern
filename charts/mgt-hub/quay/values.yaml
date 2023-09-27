@@ -12,7 +12,8 @@ param:
   FEATURE_MAILING: false
   FEATURE_REPO_MIRROR: true
   REPO_MIRROR_INTERVAL: 30
-  REPO_MIRROR_SERVER_HOSTNAME: quay-registry-quay-quay-enterprise.apps.mgmt2.npss.bos2.lab 
+    #REPO_MIRROR_SERVER_HOSTNAME: quay-registry-quay-quay-enterprise.apps.mgmt2.npss.bos2.lab 
+  REPO_MIRROR_SERVER_HOSTNAME: quay-registry-quay-quay-enterprise.{{ tpl .Values.global.hubclusterdomain . }}
   REPO_MIRROR_TLS_VERIFY: false
   REPO_MIRROR_ROLLBACK: true
   REGISTRY_TITLE: Red Hat Quay
