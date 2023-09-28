@@ -134,11 +134,11 @@ clusterGroup:
         #      path: charts/mgt-hub/openshift-data-foundations  
         #      project: hub-storage
     ### end of SNO diversion ###
-    #    acm:
-    #      name: acm
-    #      namespace: open-cluster-management
-    #      project: hub
-    #      path: charts/mgt-hub/acm
+    acm:
+      name: acm
+      namespace: open-cluster-management
+      project: hub
+      path: charts/mgt-hub/acm
         #    quay:
         #      name: quay
         #      namespace: quay-enterprise
