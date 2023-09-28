@@ -1,5 +1,7 @@
 
 #file name depends   clusterGroupName in values-global.yaml
+global:
+  quay_fqdn: quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab
 
 clusterGroup:
   name: hub
@@ -10,8 +12,8 @@ clusterGroup:
   - openshift-nmstate  
     #- openshift-local-storage   # only needed if using LSO. Not needed for SNO case
   - openshift-storage         # needed either by LVM, or LSO/ODF combo
-    #- minio                     # only needed if ODF is not being used, as in SNO's case
-    #- open-cluster-management   #for ACM
+    # - minio                     # only needed if ODF is not being used, as in SNO's case
+  - open-cluster-management   #for ACM
     # NS for non automated items:
     #- quay-enterprise              #for Quay
     #- openshift-operators-redhat   #for elasticsearch
@@ -31,11 +33,11 @@ clusterGroup:
       namespace: openshift-nmstate  
       channel: stable
     
-        #    acm:
-        #      name: advanced-cluster-management
-        #      namespace: open-cluster-management
-        #      channel: release-2.8
-        #      installPlanApproval: Manual
+    acm:
+      name: advanced-cluster-management
+      namespace: open-cluster-management
+      channel: release-2.8
+      installPlanApproval: Manual
     ## If SNO --> use LVM Operator, and enable application for LVM as well as Minio
     lvm:  
       name: lvms-operator

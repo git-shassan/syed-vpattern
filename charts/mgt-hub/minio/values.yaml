@@ -5,7 +5,7 @@ minio:
   sa: minio-sa
 image: "quay.io/minio/minio"
 namespace: minio
-size: 100Gi
+size: 200Gi
 ingress:
   # MinIO API DNS name. This is the S3 API.  Don't prefix with "https://"
   minioApiDnsName: "minio.apps.mgmt2.npss.bos2.lab"

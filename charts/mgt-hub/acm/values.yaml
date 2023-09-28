@@ -7,6 +7,6 @@ acm:
   namespace: open-cluster-management
 mce:
   namespace: multicluster-engine
-global:
-  quay_fqdn: quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab 
+    #global:
+    #  quay_fqdn: quay-registry-quay-quay-enterprise.apps.mgmt.npss.bos2.lab 
 
