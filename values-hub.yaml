@@ -14,7 +14,6 @@ clusterGroup:
   - openshift-storage         # needed either by LVM, or LSO/ODF combo
     # - minio                     # only needed if ODF is not being used, as in SNO's case
   - open-cluster-management   #for ACM
-  - multicluster-engine
     # NS for non automated items:
     #- quay-enterprise              #for Quay
     #- openshift-operators-redhat   #for elasticsearch
