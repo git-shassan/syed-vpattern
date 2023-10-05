@@ -1,0 +1,23 @@
+apiVersion: v1
+items:
+- apiVersion: operators.coreos.com/v1alpha1
+  kind: Subscription
+  metadata:
+    creationTimestamp: "2023-09-29T03:06:42Z"
+    generation: 1
+    labels:
+      operators.coreos.com/minio-operator.minio-operator: ""
+    name: minio-operator
+    namespace: minio-operator
+    resourceVersion: "1581791"
+    uid: e24f7346-6af0-4953-b662-833e3e8ec628
+  spec:
+    channel: stable
+    installPlanApproval: Automatic
+    name: minio-operator
+    source: certified-operators
+    sourceNamespace: openshift-marketplace
+    startingCSV: minio-operator.v5.0.9
+kind: List
+metadata:
+  resourceVersion: ""

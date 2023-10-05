@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  name: minio
+spec:
+  host: minio-disk.apps.mgmt2.npss.bos2.lab
+  port:
+    targetPort: minio
+  to:
+    kind: ""
+    name: minio
+    weight: null

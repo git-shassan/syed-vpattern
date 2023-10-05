@@ -1,0 +1,36 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: oadp-minio
+  namespace: open-cluster-management-backup
+spec:
+  backupLocations:
+    - velero:
+        config:
+          profile: default
+          region: minio
+          s3ForcePathStyle: 'true'
+          s3Url: 'http://minio-disk.apps.mgmt2.npss.bos2.lab'
+          insecureSkipTLSVerify: "false"
+        credential:
+          key: cloud
+          name: cloud-credentials
+        default: true
+        objectStorage:
+          bucket: mgmt2-acm 
+          prefix: velero
+        provider: aws
+  configuration:
+    restic:
+      enable: true
+    velero:
+      defaultPlugins:
+        - openshift
+        - aws
+        - kubevirt
+  snapshotLocations:
+    - velero:
+        config:
+          profile: default
+          region: minio
+        provider: aws

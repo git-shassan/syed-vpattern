@@ -1,0 +1,68 @@
+working minio route:
+oc expose service minio --hostname minio-disk.apps.mgmt2.npss.bos2.lab 
+
+After this: 
+[syed@localhost backup]$ oc get backupschedules.cluster.open-cluster-management.io -A
+NAMESPACE                        NAME           PHASE   MESSAGE
+open-cluster-management-backup   schedule-acm   New     Velero schedules are initialized
+
+syed@localhost backup]$ oc get dataprotectionapplications.oadp.openshift.io -A -ojsonpath='{.items[].status.conditions}' | jq
+[
+  {
+    "lastTransitionTime": "2023-09-29T22:33:55Z",
+    "message": "Reconcile complete",
+    "reason": "Complete",
+    "status": "True",
+    "type": "Reconciled"
+  }
+]
+
+and in the logs: 
+
+ oc logs -n open-cluster-management-backup velero-7bbc675d55-jqxdv -f 
+
+time="2023-09-29T22:35:30Z" level=info msg="Validating BackupStorageLocation" backup-storage-location=open-cluster-management-backup/oadp-minio-1 controller=backup-storage-location logSource="/remote-source/velero/app/pkg/controller/backup_storage_location_controller.go:131"
+time="2023-09-29T22:35:30Z" level=info msg="BackupStorageLocations is valid, marking as available" backup-storage-location=open-cluster-management-backup/oadp-minio-1 controller=backup-storage-location logSource="/remote-source/velero/app/pkg/controller/backup_storage_location_controller.go:116"
+
+------------
+
+Ingress used are: 
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio
+  annotations:
+    route.openshift.io/termination: edge
+spec:
+  rules:
+    - host: "minio.apps.mgmt2.npss.bos2.lab"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: minio
+              port:
+                number: 9000
+---
+# Source: minio/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-console
+  annotations:
+    route.openshift.io/termination: edge
+spec:
+  rules:
+    - host: "minio-console.apps.mgmt2.npss.bos2.lab"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: minio-console
+              port:
+                number: 9001

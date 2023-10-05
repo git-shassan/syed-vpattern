@@ -1,0 +1,71 @@
+---
+# Source: minio/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minio-creds
+  labels:
+    app: minio
+  namespace: minio2
+stringData:
+  MINIO_ROOT_USER: "minio"
+  MINIO_ROOT_PASSWORD: "minioredhat"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: minio2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: minio
+  namespace: minio2
+  labels:
+    app: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+        - name: minio
+          image: "quay.io/minio/minio"
+          args: ['server', '/data', '--console-address', ':9001']
+          ports:
+            - name: minio
+              containerPort: 9000
+          volumeMounts:
+            - name: minio-volume
+              mountPath: /data
+          env:
+            #- name: MINIO_SERVER_URL
+            #  value: "https://minio.apps.mgmt2.npss.bos2.lab"
+            #- name: MINIO_BROWSER_REDIRECT_URL
+            #  value: "https://minio-console.apps.mgmt2.npss.bos2.lab"
+            - name: MINIO_ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: minio-creds
+                  key: MINIO_ROOT_USER
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio-creds
+                  key: MINIO_ROOT_PASSWORD
+      volumes:
+        - name: minio-volume
+          persistentVolumeClaim:
+            claimName: minio-pvc

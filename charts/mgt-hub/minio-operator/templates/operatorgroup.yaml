@@ -1,0 +1,23 @@
+apiVersion: v1
+items:
+- apiVersion: operators.coreos.com/v1
+  kind: OperatorGroup
+  metadata:
+    annotations:
+      olm.providedAPIs: PolicyBinding.v1alpha1.sts.min.io,Tenant.v2.minio.min.io
+    creationTimestamp: "2023-09-29T03:06:42Z"
+    generateName: minio-operator-
+    generation: 1
+    name: minio-operator-7mpmf
+    namespace: minio-operator
+    resourceVersion: "1581567"
+    uid: 6c68e208-83b1-43a0-9631-01a54c60c8ad
+  spec:
+    upgradeStrategy: Default
+  status:
+    lastUpdated: "2023-09-29T03:06:42Z"
+    namespaces:
+    - ""
+kind: List
+metadata:
+  resourceVersion: ""
