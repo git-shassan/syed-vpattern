@@ -17,7 +17,12 @@ clusterGroup:
     # NS for non automated items:
     #- quay-enterprise              #for Quay
     #- openshift-operators-redhat   #for elasticsearch
-    #- openshift-logging            #for logging
+  - openshift-logging            #for logging
+      annotations:
+        openshift.io/node-selector: ""
+      labels:
+        openshift.io/cluster-monitoring: "true"
+        argocd.argoproj.io/managed-by: "ebc-multicloud-gitops-hub"
     #- prom-kafka-adapter           #for Kafka
     #- kafka-cluster                #for Kafka
     #- ansible                      #for ansible
@@ -67,10 +72,10 @@ clusterGroup:
         #      namespace: openshift-operators-redhat
         #      channel: stable
         #
-        #    logging:
-        #      name: cluster-logging
-        #      namespace: openshift-logging
-        #      channel: stable
+    logging:
+      name: cluster-logging
+      namespace: openshift-logging
+      channel: stable
         #   
         #    talm:
         #      name: topology-aware-lifecycle-manager

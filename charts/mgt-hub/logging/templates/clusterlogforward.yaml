@@ -1,0 +1,47 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-8"    
+
+spec:
+  outputs:
+   - name: infra-logs
+     type: kafka
+     url: tls://mgnt-kafka-kafka-bootstrap-kafka-cluster.apps.mgmt.npss.bos2.lab:443/mgmt1_infra_logs
+     secret:
+       name: kafka-secret
+   - name: audit-logs
+     type: kafka
+     url: tls://mgnt-kafka-kafka-bootstrap-kafka-cluster.apps.mgmt.npss.bos2.lab:443/mgmt1_audit_logs
+     secret:
+       name: kafka-secret
+   - name: app-logs
+     type: kafka
+     url: tls://mgnt-kafka-kafka-bootstrap-kafka-cluster.apps.mgmt.npss.bos2.lab:443/mgmt1_app_logs
+     secret:
+       name: kafka-secret
+  pipelines:
+   - name: mgmt1_infra_logs
+     inputRefs:
+     - infrastructure
+     outputRefs:
+     - infra-logs
+     labels:
+       logType: "infra"
+   - name: mgmt1_audit_logs
+     inputRefs:
+     - audit
+     outputRefs:
+     - audit-logs
+     labels:
+       logType: "audit"
+   - name: mgmt1_app_logs
+     inputRefs:
+     - application
+     outputRefs:
+     - app-logs
+     labels:
+       logType: "app"
