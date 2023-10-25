@@ -17,8 +17,8 @@ clusterGroup:
     # NS for non automated items:
     #- quay-enterprise              #for Quay
     #- openshift-operators-redhat   #for elasticsearch
-  - openshift-logging            #for logging
-      annotations:
+  - openshift-logging         # for logging operator
+      annotations: 
         openshift.io/node-selector: ""
       labels:
         openshift.io/cluster-monitoring: "true"
